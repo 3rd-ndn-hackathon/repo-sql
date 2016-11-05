@@ -18,15 +18,22 @@ DatabaseConn::DatabaseConn(boost::asio::io_service& io,
 }
 
 void
-DatabaseConn::select(const std::string& stmt, const DatabaseSelectCallback& done,
-                     const DatabaseErrorCallback& error)
+DatabaseConn::select(const std::string& where, bool wantDesc,
+                     const DatabaseSelectCallback& done, const DatabaseErrorCallback& error)
 {
+  std::ostringstream b;
+  b << "SELECT * FROM datastore WHERE "
+    << where
+    << " ORDER BY name "
+    << (wantDesc ? "DESC" : "ASC")
+    << " LIMIT 1";
+  std::string stmt = b.str();
   NDN_LOG_DEBUG(stmt);
 }
 
 void
-DatabaseConn::insert(const DatastoreRecord& record, const DatabaseInsertCallback& done,
-                     const DatabaseErrorCallback& error)
+DatabaseConn::insert(const DatastoreRecord& record,
+                     const DatabaseInsertCallback& done, const DatabaseErrorCallback& error)
 {
   std::ostringstream b;
   b << "INSERT INTO datastore (name, namelen, keylocatorhash, data) VALUES ("
@@ -35,7 +42,6 @@ DatabaseConn::insert(const DatastoreRecord& record, const DatabaseInsertCallback
     << toByteaHex(record.getKeyLocatorHash().data(), record.getKeyLocatorHash().size()) << ", "
     << toByteaHex(record.getData().wireEncode().wire(), record.getData().wireEncode().size()) << ")";
   std::string stmt = b.str();
-
   NDN_LOG_DEBUG(stmt);
 }
 

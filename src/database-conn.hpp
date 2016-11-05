@@ -24,12 +24,14 @@ public:
   /** \brief execute a SELECT statement, and return the first row
    */
   void
-  select(const std::string& stmt, const DatabaseSelectCallback& done, const DatabaseErrorCallback& error);
+  select(const std::string& where, bool wantDesc,
+         const DatabaseSelectCallback& done, const DatabaseErrorCallback& error);
 
   /** \brief insert a record
    */
   void
-  insert(const DatastoreRecord& record, const DatabaseInsertCallback& done, const DatabaseErrorCallback& error);
+  insert(const DatastoreRecord& record,
+         const DatabaseInsertCallback& done, const DatabaseErrorCallback& error);
 };
 
 } // namespace reposql
