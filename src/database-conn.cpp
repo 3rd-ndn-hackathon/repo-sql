@@ -70,7 +70,6 @@ DatabaseConn::select(const std::string& where, bool wantDesc,
       Data data;
       try {
         ndn::Block block(dataBuf);
-        NDN_LOG_TRACE(block.size() << " " << dataSize);
         data.wireDecode(block);
       }
       catch (const ndn::tlv::Error& e) {
