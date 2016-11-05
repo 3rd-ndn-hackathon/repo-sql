@@ -30,6 +30,7 @@ public:
   bool sha256;
   ndn::Name identity;
   ndn::Name dataName;
+  std::string content;
 };
 
 namespace ndn {
@@ -58,7 +59,15 @@ public:
       security::SigningInfo signInfo(security::SigningInfo::SIGNER_TYPE_ID, m_options.identity);
       m_keyChain.sign(*m_data, signInfo);
     }
+    m_data->setFreshnessPeriod(time::milliseconds(0));
     Block dataBlock = m_data->wireEncode();
+    output(dataBlock);
+  }
+
+private:
+  void
+  output(const Block& dataBlock)
+  {
     // print result to std output
     security::transform::bufferSource(dataBlock.wire(), dataBlock.size())
       >> security::transform::streamSink(std::cout);
@@ -84,6 +93,7 @@ main(int argc, char** argv)
     ("identity,I", po::value<ndn::Name>(&opt.identity), "signing identity")
     ("sha256", "using sha256 for signature")
     ("data,D", po::value<ndn::Name>(&opt.dataName)->required(), "data name")
+    ("input", po::value<std::string>(&opt.content), "input content")
     ;
   po::variables_map vm;
   try {
