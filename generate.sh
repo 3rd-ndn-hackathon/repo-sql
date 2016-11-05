@@ -52,7 +52,11 @@ idx=0
 for c1 in {0..10}; do 
 	for c2 in {0..999}; do
 		suffix=$(randomSuffix)
-		./ndnmkdata -D /repo/$c1/$c2$suffix | nc localhost 7376
+		if [ $1 == "sql" ]; then
+			./ndnmkdata -D /repo/$c1/$c2$suffix | repo-sql-insert
+		else
+			./ndnmkdata -D /repo/$c1/$c2$suffix | nc localhost 7376
+		fi
 	done;
 	echo "${idx}: inserted 1000 objects."
 	let idx=idx+1
