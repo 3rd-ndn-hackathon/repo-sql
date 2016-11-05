@@ -1,0 +1,24 @@
+$vmname = "devbox"
+$sshhostport = 2222
+
+$deps = <<SCRIPT
+apt-get update
+apt-get dist-upgrade -y -qq
+apt-get install software-properties-common
+apt-get purge -y nano
+add-apt-repository ppa:named-data/ppa
+apt-get update
+apt-get install -y -qq git build-essential nfd nfd-status-http-server ndn-tools repo-ng ndn-cxx-dev
+SCRIPT
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.network :forwarded_port, guest: 22, host: $sshhostport, id: "ssh"
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = $vmname
+    vb.memory = 4096
+    vb.cpus = 4
+  end
+  config.vm.provision "deps", type: "shell", inline: $deps
+  config.vm.provision "hostname", type: "shell", inline: "echo " + $vmname + " > /etc/hostname; hostname " + $vmname
+end
