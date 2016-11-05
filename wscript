@@ -17,6 +17,9 @@ def configure(conf):
 
     conf.env['CXXFLAGS'] = ['-std=c++11', '-O0', '-g3', '-pedantic', '-Wall', '-Wextra']
 
+    conf.check_cfg(package='libpq', args=['--cflags', '--libs'],
+                   uselib_store='PQ', mandatory=True)
+
     conf.check_cfg(package='libndn-cxx', args=['--cflags', '--libs'],
                    uselib_store='NDN_CXX', mandatory=True)
 
@@ -25,8 +28,9 @@ def configure(conf):
 def build(bld):
     bld(target='reposql-objects',
         features='cxx',
-        source=bld.path.ant_glob(['src/**/*.cpp'], excl=['src/main.cpp']),
-        use='NDN_CXX BOOST')
+        source=bld.path.ant_glob(['src/**/*.cpp', 'postgrespp/*.cpp'], excl=['src/main.cpp']),
+        use='NDN_CXX PQ BOOST',
+        includes='.')
 
     bld(target='unit-tests',
         features='cxx cxxprogram',

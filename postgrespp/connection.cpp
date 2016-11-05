@@ -18,9 +18,9 @@
   along with postgrespp.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#include "include/connection.hpp"
+#include "connection.hpp"
 
-#include "include/utility.hpp"
+#include "utility.hpp"
 
 namespace postgrespp
 {

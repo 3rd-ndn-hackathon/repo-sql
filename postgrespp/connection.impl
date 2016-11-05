@@ -1,5 +1,5 @@
 
-#include "include/result.hpp"
+#include "result.hpp"
 
 namespace postgrespp {
 

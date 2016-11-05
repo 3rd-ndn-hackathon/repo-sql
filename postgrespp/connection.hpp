@@ -100,7 +100,12 @@ public:
    * This function automatically creates the structure to call the queryParams overload below.
    */
   template<typename... Args>
-  Status queryParams(const char* const& query, Callback callback, ResultFormat const& resultFormat = ResultFormat::TEXT, Args... args);
+  Status queryParams(const char* const& query, Callback callback, ResultFormat const& resultFormat, Args... args);
+
+  Status queryParams(const char* const& query, Callback callback)
+  {
+    return queryParams(query, callback, ResultFormat::TEXT);
+  }
 
   /**
     @brief queryParams Takes parameters like PQexecParams.

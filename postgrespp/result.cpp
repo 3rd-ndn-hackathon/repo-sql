@@ -18,7 +18,7 @@
   along with postgrespp.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#include "include/result.hpp"
+#include "result.hpp"
 
 namespace postgrespp
 {

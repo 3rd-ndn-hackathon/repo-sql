@@ -1,5 +1,8 @@
 #include "database-conn.hpp"
 #include <ndn-cxx/util/string-helper.hpp>
+#include "postgrespp/connection.hpp"
+#include "postgrespp/result.hpp"
+#include "postgrespp/utility.hpp"
 
 namespace reposql {
 
