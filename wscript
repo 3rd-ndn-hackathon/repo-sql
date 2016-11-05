@@ -12,7 +12,13 @@ def options(opt):
 def configure(conf):
     conf.load(['compiler_cxx', 'gnu_dirs'])
 
+    conf.env['CXXFLAGS'] = ['-std=c++11', '-O0', '-g3', '-pedantic', '-Wall', '-Wextra']
+
+    conf.check_cfg(package='libndn-cxx', args=['--cflags', '--libs'],
+                   uselib_store='NDN_CXX', mandatory=True)
+
 def build(bld):
     bld(target='bin/repo-sql',
         features='cxx cxxprogram',
-        source='src/main.cpp')
+        source='src/main.cpp',
+        use='NDN_CXX')
