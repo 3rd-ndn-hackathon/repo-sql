@@ -17,7 +17,11 @@ toByteaHex(const uint8_t* s, size_t count)
 DatabaseConn::DatabaseConn(boost::asio::io_service& io,
                            const std::string& host, uint16_t port, const std::string& dbname,
                            const std::string& username, const std::string& password)
+  : m_io(io)
+  , m_connstr("host=" + host + " port=" + std::to_string(port) + " dbname=" + dbname +
+              " user=" + username + " password=" + password)
 {
+  NDN_LOG_INFO("connstr=" << m_connstr);
 }
 
 void
@@ -46,6 +50,18 @@ DatabaseConn::insert(const DatastoreRecord& record,
     << toByteaHex(record.getData().wireEncode().wire(), record.getData().wireEncode().size()) << ")";
   std::string stmt = b.str();
   NDN_LOG_DEBUG(stmt);
+
+  auto conn = postgrespp::Connection::create(m_io, m_connstr.c_str());
+  conn->queryParams(stmt.c_str(),
+    [conn, done, error] (const boost::system::error_code& ec, postgrespp::Result r) {
+      NDN_LOG_DEBUG("ec=" << ec << " status=" << r.getStatus() << " error=" << r.getErrorMessage());
+      if (!ec && r.getStatus() == 1) {
+        done();
+      }
+      else {
+        error(r.getStatus());
+      }
+    });
 }
 
 } // namespace reposql

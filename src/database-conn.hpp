@@ -32,6 +32,10 @@ public:
   void
   insert(const DatastoreRecord& record,
          const DatabaseInsertCallback& done, const DatabaseErrorCallback& error);
+
+private:
+  boost::asio::io_service& m_io;
+  std::string m_connstr;
 };
 
 } // namespace reposql

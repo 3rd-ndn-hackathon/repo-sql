@@ -9,8 +9,11 @@ main(int argc, char** argv)
 {
   boost::asio::io_service io;
   DatabaseConn db(io, "localhost", 5432, "ndnrepo", "postgres", "870212");
+
   boost::asio::ip::tcp::endpoint ep(boost::asio::ip::address_v4::loopback(), 7376);
-  BulkInsertAcceptor(io, ep, db);
+  BulkInsertAcceptor bulk(io, ep, db);
+
+  io.run();
   return 0;
 }
 
