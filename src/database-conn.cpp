@@ -8,7 +8,7 @@ NDN_LOG_INIT(DatabaseConn);
 std::string
 toByteaHex(const uint8_t* s, size_t count)
 {
-  return "E'\\x" + ndn::toHex(s, count) + "'";
+  return "E'\\\\x" + ndn::toHex(s, count) + "'";
 }
 
 DatabaseConn::DatabaseConn(boost::asio::io_service& io,
