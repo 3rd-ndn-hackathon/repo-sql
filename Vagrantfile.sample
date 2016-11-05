@@ -8,7 +8,7 @@ apt-get install software-properties-common
 apt-get purge -y nano
 add-apt-repository ppa:named-data/ppa
 apt-get update
-apt-get install -y -qq git build-essential nfd nfd-status-http-server ndn-tools repo-ng ndn-cxx-dev
+apt-get install -y -qq git build-essential nfd nfd-status-http-server ndn-tools repo-ng ndn-cxx-dev libboost-all-dev postgresql-9.3
 SCRIPT
 
 Vagrant.configure(2) do |config|
