@@ -18,7 +18,12 @@ def configure(conf):
                    uselib_store='NDN_CXX', mandatory=True)
 
 def build(bld):
+    bld(target='reposql-objects',
+        features='cxx',
+        source=bld.path.ant_glob(['src/**/*.cpp'], excl=['src/main.cpp']),
+        use='NDN_CXX')
+
     bld(target='bin/repo-sql',
         features='cxx cxxprogram',
         source='src/main.cpp',
-        use='NDN_CXX')
+        use='reposql-objects')
