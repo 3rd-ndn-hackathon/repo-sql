@@ -42,8 +42,9 @@ class InterestCallback(object):
 
 def express(face, interest):
     global expressedInterests
+    interest.setMustBeFresh(True)
+
     callback = InterestCallback(interest, False)
-    
     if callback._dumpData: dump("Express name ", interestToStr(interest))
 
     expressedInterests[interest] = {'callback':callback, 'express_time': time.time()}

@@ -9,17 +9,22 @@ make clean
 make
 #cp $mkdata ../
 
-# function randomName()
-# {
-# 	nComponents=`echo $((1 + RANDOM % 3))`
-# 	for c in {0..$nComponents}; do
-# 	done;
-# }
+function randomSuffix()
+{
+	local nComponents=`echo $((1 + RANDOM % 3))`
+	local suff=""
+	for c in $(seq 1 $nComponents); do
+		comp=`echo $((1 + RANDOM % 10))`
+		suff+="/${comp}"
+	done;
+	echo $suff
+}
 
 idx=0
 for c1 in {0..10}; do 
-	for c2 in {0..999}; do 
-		./ndnmkdata -D /repo/$c1/$c2 | nc localhost 7376
+	for c2 in {0..999}; do
+		suffix=$(randomSuffix)
+		./ndnmkdata -D /repo/$c1/$c2$suffix | nc localhost 7376
 	done;
 	echo "${idx}: inserted 1000 objects."
 	let idx=idx+1
