@@ -6,11 +6,14 @@
 
 #include <boost/noncopyable.hpp>
 
-#include <ndn-cxx/face.hpp>
 #include <ndn-cxx/name.hpp>
 #include <ndn-cxx/interest.hpp>
 #include <ndn-cxx/data.hpp>
+#include <ndn-cxx/signature.hpp>
+#include <ndn-cxx/key-locator.hpp>
 #include <ndn-cxx/lp/nack.hpp>
+#include <ndn-cxx/face.hpp>
+#include <ndn-cxx/security/key-chain.hpp>
 
 namespace reposql {
 
@@ -23,11 +26,14 @@ using ndn::nullopt;
 
 using boost::noncopyable;
 
-using ndn::Face;
 using ndn::Name;
 using ndn::Interest;
 using ndn::Data;
+using ndn::Signature;
+using ndn::KeyLocator;
 using ndn::lp::Nack;
+using ndn::Face;
+using ndn::KeyChain;
 
 } // namespace reposql
 

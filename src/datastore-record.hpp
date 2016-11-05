@@ -9,6 +9,12 @@ namespace reposql {
  */
 typedef std::array<uint8_t, 32> KeyLocatorHash;
 
+KeyLocatorHash
+computeKeyLocatorHash(const KeyLocator& kl);
+
+const KeyLocatorHash&
+getEmptyKeyLocatorHash();
+
 /** \brief represents a record in the datastore
  */
 class DatastoreRecord
@@ -29,7 +35,13 @@ public:
   getData() const;
 
 private:
+  void
+  updateKeyLocatorHash();
+
+private:
   const Data m_data;
+  bool m_hasKeyLocatorHash;
+  KeyLocatorHash m_keyLocatorHash;
 };
 
 } // namespace reposql
