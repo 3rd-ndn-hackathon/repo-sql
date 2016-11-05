@@ -21,11 +21,11 @@ private:
   void
   processInterest(const Interest& interest);
 
-  void
-  handleDbSelectResult(const optional<DatastoreRecord>& record);
+  std::string
+  makeWhereCondition(const Interest& interest);
 
-  void
-  handleDbSelectError(int error);
+  std::string
+  makeWhereCondition2(const Interest& interest, const Name& maxDataName);
 
 private:
   Face& m_face;

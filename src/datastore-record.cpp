@@ -30,7 +30,7 @@ DatastoreRecord::DatastoreRecord(const Data& data)
 const Name&
 DatastoreRecord::getName() const
 {
-  return m_data.getName();
+  return m_data.getFullName();
 }
 
 size_t

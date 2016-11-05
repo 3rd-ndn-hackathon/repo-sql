@@ -12,6 +12,9 @@ using DatabaseErrorCallback = std::function<void(int error)>;
 std::string
 toByteaHex(const uint8_t* s, size_t count);
 
+std::string
+toByteaHex(const ndn::Block& block, bool wantValueOnly = false);
+
 /** \brief provides a connection to the database
  */
 class DatabaseConn : noncopyable
