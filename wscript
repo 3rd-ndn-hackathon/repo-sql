@@ -43,3 +43,9 @@ def build(bld):
         features='cxx cxxprogram',
         source='src/main.cpp',
         use='reposql-objects NDN_CXX BOOST')
+
+    bld(target='bin/repo-sql-insert',
+        features='cxx cxxprogram',
+        source='tool/insert.cpp',
+        use='reposql-objects NDN_CXX BOOST',
+        includes='src')
