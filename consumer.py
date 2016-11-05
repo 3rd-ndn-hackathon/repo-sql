@@ -112,12 +112,12 @@ def main():
 
 
     # - MinSuffixComponent
-    i = Interest(Name("/repo/A"))
+    i = Interest(Name("/repo"))
     i.setMinSuffixComponents(2)
     express(face, i)
 
     # - MaxSuffixComponent
-    i = Interest(Name("/repo/A/1"))
+    i = Interest(Name("/repo/1"))
     i.setMaxSuffixComponents(2)
     express(face, i)
 
@@ -127,32 +127,32 @@ def main():
     # express(face,i)
 
     # - Exclude-one
-    i = Interest(Name("/repo/A"))
-    i.getExclude().appendComponent("1")
-    express(face, i)
+    # i = Interest(Name("/repo/A"))
+    # i.getExclude().appendComponent("1")
+    # express(face, i)
 
     # - Exclude-before
-    i = Interest(Name("/repo/A"))
-    i.getExclude().appendAny().appendComponent("5")
-    express(face, i)
+    # i = Interest(Name("/repo/A"))
+    # i.getExclude().appendAny().appendComponent("5")
+    # express(face, i)
 
     # - Exclude-between
-    i = Interest(Name("/repo/A"))
-    i.getExclude().appendComponent("3").appendComponent("7")
-    express(face, i)
+    # i = Interest(Name("/repo/A"))
+    # i.getExclude().appendComponent("3").appendComponent("7")
+    # express(face, i)
 
     # - Exclude-after
-    i = Interest(Name("/repo/A"))
-    i.getExclude().appendComponent("5").appendAny()
-    express(face, i)
+    # i = Interest(Name("/repo/A"))
+    # i.getExclude().appendComponent("5").appendAny()
+    # express(face, i)
 
     # - ChildSelector = leftmost
-    i = Interest(Name("/repo/A"))
+    i = Interest(Name("/repo/3"))
     i.setChildSelector(0)
     express(face, i)
 
     # - ChildSelector = rightmost
-    i = Interest(Name("/repo/A"))
+    i = Interest(Name("/repo/4"))
     i.setChildSelector(1)
     i.setMaxSuffixComponents(2)
     express(face, i)
