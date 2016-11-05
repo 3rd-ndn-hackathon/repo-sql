@@ -27,23 +27,66 @@ QueryProcessor::processInterest(const Interest& interest)
   NDN_LOG_DEBUG("interest " << interest);
 
   if (interest.getChildSelector() == 1) {
-    BOOST_ASSERT_MSG(false, "not implemented");
+    this->processRightmost(interest);
   }
   else {
-    m_db.select(this->makeWhereCondition(interest), false,
-      [=] (const optional<DatastoreRecord>& record) {
-        if (!record) {
-          NDN_LOG_TRACE("not-found");
-          ///\todo send Nack
-          return;
-        }
-        NDN_LOG_TRACE("found " << record->getName());
-        m_face.put(record->getData());
-      },
-      [=] (int err) {
-        NDN_LOG_WARN("db.select err=" << err);
-      });
+    this->processLeftmost(interest);
   }
+}
+
+void
+QueryProcessor::processLeftmost(const Interest& interest)
+{
+  m_db.select(this->makeWhereCondition(interest), false,
+    [=] (const optional<DatastoreRecord>& record) {
+      if (!record) {
+        NDN_LOG_TRACE("not-found");
+        ///\todo send Nack
+        return;
+      }
+      NDN_LOG_TRACE("found-leftmost " << record->getName());
+      m_face.put(record->getData());
+    },
+    [=] (int err) {
+      NDN_LOG_WARN("db.select err=" << err);
+    });
+}
+
+void
+QueryProcessor::processRightmost(const Interest& interest)
+{
+  m_db.select(this->makeWhereCondition(interest), true,
+    [=] (const optional<DatastoreRecord>& record) {
+      if (!record) {
+        NDN_LOG_TRACE("not-found");
+        ///\todo send Nack
+        return;
+      }
+      NDN_LOG_TRACE("found-max " << record->getName());
+
+      if (record->getName().size() == interest.getName().size()) {
+        NDN_LOG_TRACE("found-rightmost " << record->getName());
+        m_face.put(record->getData());
+        return;
+      }
+
+      m_db.select(this->makeWhereCondition2(interest, record->getName()), false,
+        [=] (const optional<DatastoreRecord>& record2) {
+          if (!record) {
+            NDN_LOG_TRACE("not-found");
+            ///\todo send Nack
+            return;
+          }
+          NDN_LOG_TRACE("found-rightmost " << record2->getName());
+          m_face.put(record2->getData());
+        },
+        [=] (int err) {
+          NDN_LOG_WARN("db.select err=" << err);
+        });
+    },
+    [=] (int err) {
+      NDN_LOG_WARN("db.select err=" << err);
+    });
 }
 
 std::string
