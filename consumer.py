@@ -114,7 +114,7 @@ def main():
 
     # - MinSuffixComponent
     i = Interest(Name("/repo"))
-    i.setMinSuffixComponents(2)
+    i.setMinSuffixComponents(4)
     express(face, i)
 
     # - MaxSuffixComponent
