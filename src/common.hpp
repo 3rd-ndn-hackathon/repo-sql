@@ -4,6 +4,7 @@
 #include <memory>
 #include <ndn-cxx/util/backports.hpp>
 
+#include <boost/asio.hpp>
 #include <boost/noncopyable.hpp>
 
 #include <ndn-cxx/name.hpp>
@@ -14,6 +15,7 @@
 #include <ndn-cxx/lp/nack.hpp>
 #include <ndn-cxx/face.hpp>
 #include <ndn-cxx/security/key-chain.hpp>
+#include <ndn-cxx/util/logger.hpp>
 
 namespace reposql {
 
