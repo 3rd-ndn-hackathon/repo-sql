@@ -14,8 +14,8 @@ BOOST_AUTO_TEST_CASE(NoKeyLocator)
   keyChain.sign(*data, ndn::security::signingWithSha256());
 
   DatastoreRecord record(*data);
-  BOOST_CHECK_EQUAL(record.getName(), "/P/A/1");
-  BOOST_CHECK_EQUAL(record.getNameLen(), 3);
+  BOOST_CHECK_EQUAL(record.getName(), data->getFullName());
+  BOOST_CHECK_EQUAL(record.getNameLen(), 4);
   BOOST_CHECK(record.getKeyLocatorHash() == getEmptyKeyLocatorHash());
   BOOST_CHECK(record.getData() == *data);
 }
@@ -29,8 +29,8 @@ BOOST_AUTO_TEST_CASE(HasKeyLocator)
   keyChain.sign(*data2);
 
   DatastoreRecord record1(*data1);
-  BOOST_CHECK_EQUAL(record1.getName(), "/P/A/1");
-  BOOST_CHECK_EQUAL(record1.getNameLen(), 3);
+  BOOST_CHECK_EQUAL(record1.getName(), data1->getFullName());
+  BOOST_CHECK_EQUAL(record1.getNameLen(), 4);
   BOOST_CHECK(record1.getKeyLocatorHash() != getEmptyKeyLocatorHash());
   BOOST_CHECK(record1.getData() == *data1);
 
