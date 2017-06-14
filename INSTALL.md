@@ -2,6 +2,7 @@
 
 ## Dependencies
 
+    sudo apt-get install postgresql-9.3  ndn-cxx-dev nfd
 
 ## Database Setup
 
