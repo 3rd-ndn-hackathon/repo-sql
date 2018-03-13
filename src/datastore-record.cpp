@@ -1,5 +1,5 @@
 #include "datastore-record.hpp"
-#include <ndn-cxx/util/digest.hpp>
+#include <ndn-cxx/util/sha256.hpp>
 
 namespace reposql {
 
