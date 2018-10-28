@@ -21,17 +21,8 @@ private:
   void
   processInterest(const Interest& interest);
 
-  void
-  processLeftmost(const Interest& interest);
-
-  void
-  processRightmost(const Interest& interest);
-
   std::string
   makeWhereCondition(const Interest& interest);
-
-  std::string
-  makeWhereCondition2(const Interest& interest, const Name& maxDataName);
 
 private:
   Face& m_face;
