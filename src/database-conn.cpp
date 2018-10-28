@@ -37,7 +37,7 @@ DatabaseConn::select(const std::string& where, bool wantDesc,
                      const DatabaseSelectCallback& done, const DatabaseErrorCallback& error)
 {
   std::ostringstream b;
-  b << "SELECT data, LENGTH(data) FROM datastore WHERE "
+  b << "SELECT data, OCTET_LENGTH(data) FROM datastore WHERE "
     << where
     << " ORDER BY name "
     << (wantDesc ? "DESC" : "ASC")
@@ -49,10 +49,6 @@ DatabaseConn::select(const std::string& where, bool wantDesc,
   conn->queryParams(stmt.c_str(),
     [conn, done, error] (const boost::system::error_code& ec, postgrespp::Result r) {
       NDN_LOG_TRACE("ec=" << ec << " status=" << r.getStatus() << " error=" << r.getErrorMessage() << " rows=" << r.rows());
-      // if (ec || r.getStatus() != 1) {
-      //   error(r.getStatus());
-      //   return;
-      // }
       if (r.rows() == 0) {
         done(nullopt);
         return;
@@ -83,10 +79,8 @@ DatabaseConn::insert(const DatastoreRecord& record,
                      const DatabaseInsertCallback& done, const DatabaseErrorCallback& error)
 {
   std::ostringstream b;
-  b << "INSERT INTO datastore (name, namelen, keylocatorhash, data) VALUES ("
+  b << "INSERT INTO datastore (name, data) VALUES ("
     << toByteaHex(record.getName().wireEncode(), true) << ", "
-    << record.getNameLen() << ", "
-    << toByteaHex(record.getKeyLocatorHash().data(), record.getKeyLocatorHash().size()) << ", "
     << toByteaHex(record.getData().wireEncode()) << ")";
   std::string stmt = b.str();
   NDN_LOG_DEBUG(stmt);
