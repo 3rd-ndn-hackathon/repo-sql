@@ -15,7 +15,7 @@ REQUIRED_BOOST_LIBS = ['system', 'thread', 'log', 'log_setup', 'unit_test_framew
 def configure(conf):
     conf.load(['compiler_cxx', 'gnu_dirs', 'boost'])
 
-    conf.env['CXXFLAGS'] = ['-std=c++11', '-O0', '-g3', '-pedantic', '-Wall', '-Wextra']
+    conf.env['CXXFLAGS'] = ['-std=c++14', '-O0', '-g3', '-pedantic', '-Wall', '-Wextra']
 
     conf.check_cfg(package='libpq', args=['--cflags', '--libs'],
                    uselib_store='PQ', mandatory=True)
