@@ -15,7 +15,7 @@ REQUIRED_BOOST_LIBS = ['system', 'thread', 'log', 'log_setup', 'unit_test_framew
 def configure(conf):
     conf.load(['compiler_cxx', 'gnu_dirs', 'boost'])
 
-    conf.env['CXXFLAGS'] = ['-std=c++14', '-O0', '-g3', '-pedantic', '-Wall', '-Wextra']
+    conf.env['CXXFLAGS'] = ['-std=c++14', '-O2', '-g', '-pedantic', '-Wall', '-Wextra']
 
     conf.check_cfg(package='libpq', args=['--cflags', '--libs'],
                    uselib_store='PQ', mandatory=True)
@@ -49,3 +49,10 @@ def build(bld):
         source='tool/insert.cpp',
         use='reposql-objects NDN_CXX BOOST',
         includes='src')
+
+    bld(target='bin/datagen',
+        features='cxx cxxprogram',
+        source='tool/datagen.cpp',
+        use='NDN_CXX BOOST',
+        includes='src',
+        install_path=None)
