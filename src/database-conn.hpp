@@ -20,9 +20,7 @@ toByteaHex(const ndn::Block& block, bool wantValueOnly = false);
 class DatabaseConn : noncopyable
 {
 public:
-  DatabaseConn(boost::asio::io_service& io,
-               const std::string& host, uint16_t port, const std::string& dbname,
-               const std::string& username, const std::string& password);
+  DatabaseConn(boost::asio::io_service& io, std::string connstr);
 
   /** \brief execute a SELECT statement, and return the first row
    */

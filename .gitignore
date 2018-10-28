@@ -4,3 +4,4 @@
 .lock*
 **/*.pyc
 build/
+connstr.txt

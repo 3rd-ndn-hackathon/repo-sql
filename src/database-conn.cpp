@@ -25,12 +25,9 @@ toByteaHex(const ndn::Block& block, bool wantValueOnly)
   }
 }
 
-DatabaseConn::DatabaseConn(boost::asio::io_service& io,
-                           const std::string& host, uint16_t port, const std::string& dbname,
-                           const std::string& username, const std::string& password)
+DatabaseConn::DatabaseConn(boost::asio::io_service& io, std::string connstr)
   : m_io(io)
-  , m_connstr("host=" + host + " port=" + std::to_string(port) + " dbname=" + dbname +
-              " user=" + username + " password=" + password)
+  , m_connstr(std::move(connstr))
 {
   NDN_LOG_INFO("connstr=" << m_connstr);
 }
