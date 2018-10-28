@@ -66,9 +66,9 @@ Connection::Status Connection::rollback() {
 }
 
 Connection::~Connection() {
-#ifndef NDEBUG
-  std::cerr << "postgres++: connection ended.\n";
-#endif
+// #ifndef NDEBUG
+//   std::cerr << "postgres++: connection ended.\n";
+// #endif
   PQfinish(m_handle);
 }
 
